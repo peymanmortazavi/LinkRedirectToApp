@@ -1,32 +1,29 @@
+<!DOCTYPE html>
 <html>
-	<head>
-		<title>
-			App Link
-		</title>
-
-	</head>
-
-	<body>
-
-	<p id="status">
-		Status: 
-	</p>
-
-	<script type="text/javascript">
-
-		//document.cookie="haha";
-		//$("#status").text("COOKIE: " + document.cookie)
-		setTimeout(function() {
-		  window.location = "message.html"
-		}, 25);
-
-		// If "custom-uri://" is registered the app will launch immediately and your
-		// timer won't fire. If it's not set, you'll get an ugly "Cannot Open Page"
-		// dialogue prior to the App Store application launching
-		window.location = "testapp://?key1=value1";
-
-	</script>
-
-	</body>
-
+    <head>
+    <title>iOS Automatic Deep Linking</title>
+    <script src='//code.jquery.com/jquery-1.11.2.min.js'></script>
+    <script src='//mobileesp.googlecode.com/svn/JavaScript/mdetect.js'></script>
+    <script>
+      (function ($, MobileEsp) {
+        // On document ready, redirect to the App on the App store.
+        $(function () {
+          if (typeof MobileEsp.DetectIos !== 'undefined' && MobileEsp.DetectIos()) {
+            // Add an iframe to twitter://, and then an iframe for the app store
+            // link. If the first fails to redirect to the Twitter app, the
+            // second will redirect to the app on the App Store. We use jQuery
+            // to add this after the document is fully loaded, so if the user
+            // comes back to the browser, they see the content they expect.
+            $('#mobilesuggesion').append('<iframe style="display: none" src="testapp://?appId=someAppId" />')
+              .append('<div><p>Did you know we have an app?!!!</p></div>');
+          }
+        });
+      })(jQuery, MobileEsp);
+    </script>
+    </head>
+    <body>
+    <div id="mobilesuggesion">
+    </div>
+    <p>Website content for when mobile is not available.</p>
+    </body>
 </html>
